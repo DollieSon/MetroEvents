@@ -1,0 +1,10 @@
+{
+    "0":{
+        "Name":"BirthdayParty",
+        "Description":"Someone's Bday",
+        "Time":"10:30",
+        "Organizer":0,
+        "Pending":[1],
+        "Joining":[2]
+    }
+}

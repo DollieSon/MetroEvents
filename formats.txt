@@ -1,0 +1,25 @@
+//Users
+{
+    (ID):{
+        username:(),
+        password:(),
+        level:(), // Authentication level
+        posted_Events:[(eventID)]
+        joined_Events:[(eventID)]
+    }
+}
+
+//AuthLevels
+Master,Mod,Organizer,Participant
+4       3    2         1
+//Events
+{
+    (ID):{
+        Name:(),
+        Description:(),
+        Time:(),
+        Organizer:(UserID),
+        Pending:[(UserID)],
+        Joining:[(UserID)];
+    }
+}
