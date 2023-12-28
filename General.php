@@ -67,7 +67,10 @@ class MyFileHandler
     }
 
 }
-
-
-
+/*
+$template_UserData = [
+    'username' =>
+]
+$template_EventData
+*/
 ?>

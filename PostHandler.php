@@ -2,30 +2,31 @@
 include("General.php");
 $FH = MyFileHandler::getFileHandler();
 
-function CreatePost($postData)
+
+function CreateEvent($eventData)
 {
 
 }
-function DeletePost($postID)
+function DeleteEvent($eventID)
 {
 
 }
-function ChangePost($postID, $postData)
+function ChangeEvent($eventID, $eventData)
 {
 
 }
-function UserJoinPost($postData, $userID)
+function UserJoinEvent($eventData, $userID)
 {
 
 }
-function UserAcceptPost($postData, $userID)
+function UserAcceptEvent($eventData, $userID)
 {
 
 }
 
 print_r($FH->getUserDataArray());
 echo "<br>";
-print_r($FH->getPostDataArray());
+print_r($FH->getEventsDataArray());
 
 
 ?>
