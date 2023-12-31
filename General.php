@@ -1,6 +1,4 @@
 <?php
-
-
 class MyFileHandler
 {
     private static $eventsLoc = "./data/events.json";
@@ -24,7 +22,8 @@ class MyFileHandler
 
     private function setData($Data, $Path)
     {
-        $js_String = json_decode($Data, JSON_PRETTY_PRINT);
+        //for pretty print json->string
+        $js_String = json_encode($Data, JSON_PRETTY_PRINT);
         $file = fopen($Path, 'w');
         fwrite($file, $js_String);
         fclose($file);
@@ -58,6 +57,7 @@ class MyFileHandler
 
     function setEventsData($EventData)
     {
+
         self::setData($EventData, self::$eventsLoc);
     }
 
@@ -67,10 +67,50 @@ class MyFileHandler
     }
 
 }
-/*
+$template_EventData = [
+    'Name' => 'Casa Party',
+    'Description' => 'Not Filled',
+    'Time' => '12:00',
+    'Organizer' => '0',
+    'Pending' => [],
+    'Joining' => []
+];
+
+
 $template_UserData = [
-    'username' =>
-]
-$template_EventData
+    'username' => '',
+    'password' => '',
+    'level' => '',
+    'posted_Events' => [],
+    'joined_Events' => []
+];
+
+
+function CreateEventTemplate($PostInfo)
+{
+    global $template_EventData;
+    //print_r($PostInfo);
+    $PostInfo = (array) $PostInfo;
+    $resultEvent = $template_EventData;
+    if (isset($PostInfo['Name'])) {
+        $resultEvent['Name'] = $PostInfo['Name'];
+    }
+    if (isset($PostInfo['Description'])) {
+        $resultEvent['Description'] = $PostInfo['Description'];
+    }
+    if (isset($PostInfo['Time'])) {
+        $resultEvent['Time'] = $PostInfo['Time'];
+    }
+    if (isset($PostInfo['Organizer'])) {
+        $resultEvent['Organizer'] = $PostInfo['Organizer'];
+    }
+    //print_r($resultEvent);
+    return $resultEvent;
+}
+/*
+function CreateUser()
+{
+    return $template_UserData;
+}
 */
 ?>
