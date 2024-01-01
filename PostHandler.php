@@ -36,16 +36,17 @@ function UserJoinEvent($eventID, $userID)
 {
     global $FH;
     $Events = $FH->getEventsDataArray();
-    $Pending = $Events[$eventID]['Pending'];
-    array_push($Pending, $userID);
-    //print_r($Pending);
-    $Events[$eventID]['Pending'] = $Pending;
-    //print_r($Events);
+    array_push($Events[$eventID]['Pending'], $userID);
     $FH->setEventsData($Events);
 }
 function UserAcceptEvent($eventID, $userID)
 {
-
+    global $FH;
+    $Events = $FH->getEventsDataArray();
+    $Key = array_search($userID, $Events[$eventID]['Pending']);
+    unset($Events[$eventID]['Pending'][$Key]);
+    array_push($Events[$eventID]['Joining'], $userID);
+    $FH->setEventsData($Events);
 }
 function createComment($comment)
 {
@@ -88,6 +89,16 @@ if (isset($_POST['type'])) {
                 break;
             }
             echo "Not Set";
+            break;
+        case '4':
+            createComment("Type 4: Add User to Event");
+            print_r($_POST);
+            if (isset($_POST['userID']) && isset($_POST['eventID'])) {
+                UserAcceptEvent(intval($_POST['eventID']), intval($_POST['userID']));
+                break;
+            }
+            echo "Not Set";
+
             break;
         default:
             //Error

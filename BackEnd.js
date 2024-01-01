@@ -51,7 +51,22 @@ function AddUserToEvent(){
         type:"POST",
         data:{
             type:'3',
-            userID:'4',
+            userID:'5',
+            eventID:'2'
+        },
+        success:(resp)=>{
+            console.log(resp);
+        }
+    });
+}
+
+function AcceptUserToEvent(){
+    $.ajax({
+        url:"http://localhost:430/MetroEvents/PostHandler.php",
+        type:"POST",
+        data:{
+            type:'4',
+            userID:'5',
             eventID:'2'
         },
         success:(resp)=>{
