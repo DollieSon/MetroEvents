@@ -2,6 +2,7 @@
 include("General.php");
 $FH = MyFileHandler::getFileHandler();
 
+//Compressed Functions
 
 
 
@@ -22,13 +23,20 @@ function DeleteEvent($eventID)
 }
 function ChangeEvent($eventID, $eventData)
 {
-
+    global $FH;
+    $Events = $FH->getEventsDataArray();
+    $EventChosen = $Events[$eventID];
+    $EventChosen['Name'] = $eventData['Name'];
+    $EventChosen['Description'] = $eventData['Description'];
+    $EventChosen['Time'] = $eventData['Time'];
+    $Events[$eventID] = $EventChosen;
+    $FH->setEventsData($Events);
 }
-function UserJoinEvent($eventData, $userID)
+function UserJoinEvent($eventID, $userID)
 {
 
 }
-function UserAcceptEvent($eventData, $userID)
+function UserAcceptEvent($eventID, $userID)
 {
 
 }
@@ -56,7 +64,15 @@ if (isset($_POST['type'])) {
             //echo "0";
             # code...
             break;
-
+        case '2':
+            createComment("Type 2: Edit Event");
+            if (isset($_POST['data']) && isset($_POST['eventID'])) {
+                $tempEvent = json_decode($_POST['data']);
+                $tempEvent = CreateEventTemplate($tempEvent);
+                ChangeEvent(intval($_POST['eventID']), $tempEvent);
+                break;
+            }
+            break;
         default:
             //Error
             echo "Error type not found";
