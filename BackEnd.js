@@ -45,3 +45,17 @@ function ChangeEvent(){
         }
     });
 }
+function AddUserToEvent(){
+    $.ajax({
+        url:"http://localhost:430/MetroEvents/PostHandler.php",
+        type:"POST",
+        data:{
+            type:'3',
+            userID:'4',
+            eventID:'2'
+        },
+        success:(resp)=>{
+            console.log(resp);
+        }
+    });
+}

@@ -34,7 +34,14 @@ function ChangeEvent($eventID, $eventData)
 }
 function UserJoinEvent($eventID, $userID)
 {
-
+    global $FH;
+    $Events = $FH->getEventsDataArray();
+    $Pending = $Events[$eventID]['Pending'];
+    array_push($Pending, $userID);
+    //print_r($Pending);
+    $Events[$eventID]['Pending'] = $Pending;
+    //print_r($Events);
+    $FH->setEventsData($Events);
 }
 function UserAcceptEvent($eventID, $userID)
 {
@@ -72,6 +79,15 @@ if (isset($_POST['type'])) {
                 ChangeEvent(intval($_POST['eventID']), $tempEvent);
                 break;
             }
+            break;
+        case '3':
+            createComment("Type 3: Add User to Event");
+            print_r($_POST);
+            if (isset($_POST['userID']) && isset($_POST['eventID'])) {
+                UserJoinEvent(intval($_POST['eventID']), intval($_POST['userID']));
+                break;
+            }
+            echo "Not Set";
             break;
         default:
             //Error
