@@ -7,17 +7,18 @@ $(()=>{
     
 });
 
-function CreateEvent(){
+function CreateEvent(Name,Desc,Time,Org){
     $.ajax({
         url:"http://localhost:430/MetroEvents/PostHandler.php",
         type:"POST",
         data:{
             type:'1',
+            userID:'2',
             data:JSON.stringify({
-                "Name":'Namaste',
-                "Description":"Party",
-                "Time":"11:59",
-                "Organizer":"0"
+                "Name":Name,
+                "Description":Desc,
+                "Time":Time,
+                "Organizer":Org
             })
         },
         success:(resp)=>{
@@ -26,17 +27,17 @@ function CreateEvent(){
     });
 }
 
-function ChangeEvent(){
+function ChangeEvent(Name,Desc,Time,Org){
     $.ajax({
         url:"http://localhost:430/MetroEvents/PostHandler.php",
         type:"POST",
         data:{
             type:'2',
             data:JSON.stringify({
-                "Name":'King',
-                "Description":"Partey",
-                "Time":"11:59",
-                "Organizer":"0"
+                "Name":Name,
+                "Description":Desc,
+                "Time":Time,
+                "Organizer":Org
             }),
             eventID:'2'
         },
@@ -45,14 +46,14 @@ function ChangeEvent(){
         }
     });
 }
-function AddUserToEvent(){
+function AddUserToEvent(uID,eID){
     $.ajax({
         url:"http://localhost:430/MetroEvents/PostHandler.php",
         type:"POST",
         data:{
             type:'3',
-            userID:'5',
-            eventID:'2'
+            userID:uID,
+            eventID:eID
         },
         success:(resp)=>{
             console.log(resp);
@@ -60,14 +61,14 @@ function AddUserToEvent(){
     });
 }
 
-function AcceptUserToEvent(){
+function AcceptUserToEvent(uID,eID){
     $.ajax({
         url:"http://localhost:430/MetroEvents/PostHandler.php",
         type:"POST",
         data:{
             type:'4',
-            userID:'5',
-            eventID:'2'
+            userID:uID,
+            eventID:eID
         },
         success:(resp)=>{
             console.log(resp);
@@ -75,19 +76,82 @@ function AcceptUserToEvent(){
     });
 }
 
-function Login(){
+
+function DeleteEvent(cID,eID){
+    $.ajax({
+        url:"http://localhost:430/MetroEvents/PostHandler.php",
+        type:"POST",
+        data:{
+            type:'5',
+            creatorID:cID,
+            eventID:eID
+        },
+        success:(resp)=>{
+            console.log(resp);
+        }
+    });
+}
+
+function Login(uName,pass){
     $.ajax({
         url:"http://localhost:430/MetroEvents/UserHandler.php",
         type:"POST",
         data:{
             type:'1',
-            username:'Dollison',
-            password:'password'
+            username:uName,
+            password:pass
         },
         success:(resp)=>{
             console.log(resp);
         }
     });
     
+}
+
+function CreateUser(uName,pass){
+    $.ajax({
+        url:"http://localhost:430/MetroEvents/UserHandler.php",
+        type:"POST",
+        data:{
+            type:'2',
+            username:uName,
+            password:pass
+        },
+        success:(resp)=>{
+            console.log(resp);
+        }
+    });
+    
+}
+
+function ChangeUserAuth(uID,AuthLevel){
+    $.ajax({
+        url:"http://localhost:430/MetroEvents/UserHandler.php",
+        type:"POST",
+        data:{
+            type:'3',
+            userID:uID,
+            Level:AuthLevel
+        },
+        success:(resp)=>{
+            console.log(resp);
+        }
+    });
+}
+
+function ChangeUserDetails(uID,uName,pass){
+    $.ajax({
+        url:"http://localhost:430/MetroEvents/UserHandler.php",
+        type:"POST",
+        data:{
+            type:'4',
+            userID:uID,
+            username:uName,
+            password:pass
+        },
+        success:(resp)=>{
+            console.log(resp);
+        }
+    });
 }
 

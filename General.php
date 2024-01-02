@@ -80,9 +80,10 @@ $template_EventData = [
 $template_UserData = [
     'username' => '',
     'password' => '',
-    'level' => '',
+    'level' => '1',
     'posted_Events' => [],
-    'joined_Events' => []
+    'joined_Events' => [],
+    "accepted_Events" => []
 ];
 
 
@@ -107,10 +108,14 @@ function CreateEventTemplate($PostInfo)
     //print_r($resultEvent);
     return $resultEvent;
 }
-/*
-function CreateUser()
+
+function CreateUserTemplate($userName, $passWord)
 {
-    return $template_UserData;
+    global $template_UserData;
+    $resultUser = $template_UserData;
+    $resultUser['username'] = $userName;
+    $resultUser['password'] = $passWord;
+    return $resultUser;
 }
-*/
+
 ?>

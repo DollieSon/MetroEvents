@@ -1,24 +1,57 @@
 <?php
 include("General.php");
 $FH = MyFileHandler::getFileHandler();
-
+print_r($FH->getUserDataArray());
+echo "<br>";
+print_r($FH->getEventsDataArray());
 //Compressed Functions
 
-
+function UnsetFromArray($array, $ID, $IDParam, $SerchFor)
+{
+    if (!empty($array[$ID][$IDParam])) {
+        $Key = array_search($SerchFor, $array[$ID][$IDParam]);
+        echo "  Key" . $Key;
+        if (isset($Key)) {
+            unset($SerchFor, $array[$ID][$IDParam][$Key]);
+        }
+    }
+    return $array;
+}
 
 //assume that $eventData is Array ; Chnage Later
-function CreateEvent($eventData)
+function CreateEvent($eventData, $creatorID)
 {
     global $FH;
     $Events = $FH->getEventsDataArray();
-    $Events[strval(intval(array_key_last($Events)) + 1)] = $eventData;
+    $EventID = strval(intval(array_key_last($Events)) + 1);
+    $Events[$EventID] = $eventData;
     print_r($Events);
     $FH->setEventsData($Events);
+
+    $Users = $FH->getUserDataArray();
+    array_push($Users[$creatorID]['posted_Events'], $EventID);
+    $FH->setUserData($Users);
 }
 
+
+
 //delete events in all users
-function DeleteEvent($eventID)
+function DeleteEvent($eventID, $creatorID)
 {
+    global $FH;
+    $Events = $FH->getEventsDataArray();
+    $Users = $FH->getUserDataArray();
+    $UserIDs = array_merge($Events[$eventID]['Pending'], $Events[$eventID]['Joining']);
+    print_r($UserIDs);
+    unset($Events[$eventID]);
+    foreach ($UserIDs as $ID => $detail) {
+        $Users = UnsetFromArray($Users, $detail, 'joined_Events', $eventID);
+        $Users = UnsetFromArray($Users, $detail, 'accepted_Events', $eventID);
+    }
+    $FH->setEventsData($Events);
+
+    $Users = UnsetFromArray($Users, $creatorID, 'posted_Events', $eventID);
+    $FH->setUserData($Users);
 
 }
 function ChangeEvent($eventID, $eventData)
@@ -38,15 +71,23 @@ function UserJoinEvent($eventID, $userID)
     $Events = $FH->getEventsDataArray();
     array_push($Events[$eventID]['Pending'], $userID);
     $FH->setEventsData($Events);
+
+    $Users = $FH->getUserDataArray();
+    array_push($Users[$userID]['joined_Events'], $eventID);
+    $FH->setUserData($Users);
 }
 function UserAcceptEvent($eventID, $userID)
 {
     global $FH;
     $Events = $FH->getEventsDataArray();
-    $Key = array_search($userID, $Events[$eventID]['Pending']);
-    unset($Events[$eventID]['Pending'][$Key]);
+    $Events = UnsetFromArray($Events, $eventID, 'Pending', $userID);
     array_push($Events[$eventID]['Joining'], $userID);
     $FH->setEventsData($Events);
+
+    $Users = $FH->getUserDataArray();
+    $Users = UnsetFromArray($Users, $userID, 'joined_Events', $eventID);
+    array_push($Users[$userID]['accepted_Events'], $eventID);
+    $FH->setUserData($Users);
 }
 function createComment($comment)
 {
@@ -60,12 +101,12 @@ if (isset($_POST['type'])) {
         case '1':
             createComment("Type 1");
             //parse data
-            if (isset($_POST['data'])) {
+            if (isset($_POST['data']) && isset($_POST['userID'])) {
                 //print_r($_POST['data']);
                 $tempEvent = json_decode($_POST['data']);
                 //print_r($tempEvent);
                 $tempEvent = CreateEventTemplate($tempEvent);
-                CreateEvent($tempEvent);
+                CreateEvent($tempEvent, $_POST['userID']);
                 //echo "1";
                 break;
             }
@@ -98,7 +139,12 @@ if (isset($_POST['type'])) {
                 break;
             }
             echo "Not Set";
-
+            break;
+        case '5':
+            if (isset($_POST['creatorID']) && isset($_POST['eventID'])) {
+                DeleteEvent(intval($_POST['eventID']), intval($_POST['creatorID']));
+                break;
+            }
             break;
         default:
             //Error
@@ -108,10 +154,6 @@ if (isset($_POST['type'])) {
 }
 
 
-
-print_r($FH->getUserDataArray());
-echo "<br>";
-print_r($FH->getEventsDataArray());
 
 
 ?>

@@ -5,7 +5,8 @@
         password:(),
         level:(), // Authentication level
         posted_Events:[(eventID)]
-        joined_Events:[(eventID)]
+        joined_Events:[(eventID)],
+        "accepted_Events":[]
     }
 }
 

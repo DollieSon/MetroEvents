@@ -1,7 +1,7 @@
-<?php 
-	include("General.php");
+<?php
+include("General.php");
 
-	if(isset($_POST['variable']))
+if (isset($_POST['variable']))
 
 
- ?>
+?>
