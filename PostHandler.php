@@ -1,10 +1,8 @@
 <?php
 include("General.php");
 $FH = MyFileHandler::getFileHandler();
-print_r($FH->getUserDataArray());
-echo "<br>";
-print_r($FH->getEventsDataArray());
 //Compressed Functions
+
 
 function UnsetFromArray($array, $ID, $IDParam, $SerchFor)
 {
@@ -18,6 +16,12 @@ function UnsetFromArray($array, $ID, $IDParam, $SerchFor)
     return $array;
 }
 
+function getEventsList()
+{
+    global $FH;
+    echo $FH->getEventsData();
+}
+
 //assume that $eventData is Array ; Chnage Later
 function CreateEvent($eventData, $creatorID)
 {
@@ -29,7 +33,7 @@ function CreateEvent($eventData, $creatorID)
     $FH->setEventsData($Events);
 
     $Users = $FH->getUserDataArray();
-    array_push($Users[$creatorID]['posted_Events'], $EventID);
+    array_push($Users[$creatorID]['posted_Events'], intval($EventID));
     $FH->setUserData($Users);
 }
 
@@ -41,12 +45,11 @@ function DeleteEvent($eventID, $creatorID)
     global $FH;
     $Events = $FH->getEventsDataArray();
     $Users = $FH->getUserDataArray();
-    $UserIDs = array_merge($Events[$eventID]['Pending'], $Events[$eventID]['Joining']);
+    $UserIDs = array_merge($Events[$eventID]['Pending'], $Events[$eventID]['Joining'], $Events[$eventID]['Declined']);
     print_r($UserIDs);
     unset($Events[$eventID]);
     foreach ($UserIDs as $ID => $detail) {
         $Users = UnsetFromArray($Users, $detail, 'joined_Events', $eventID);
-        $Users = UnsetFromArray($Users, $detail, 'accepted_Events', $eventID);
     }
     $FH->setEventsData($Events);
 
@@ -76,18 +79,17 @@ function UserJoinEvent($eventID, $userID)
     array_push($Users[$userID]['joined_Events'], $eventID);
     $FH->setUserData($Users);
 }
-function UserAcceptEvent($eventID, $userID)
+function UserAcceptEvent($eventID, $userID, $Mode)
 {
     global $FH;
     $Events = $FH->getEventsDataArray();
     $Events = UnsetFromArray($Events, $eventID, 'Pending', $userID);
-    array_push($Events[$eventID]['Joining'], $userID);
+    if ($Mode == 1) {
+        array_push($Events[$eventID]['Joining'], $userID);
+    } else if ($Mode = 0) {
+        array_push($Events[$eventID]['Declined'], $userID);
+    }
     $FH->setEventsData($Events);
-
-    $Users = $FH->getUserDataArray();
-    $Users = UnsetFromArray($Users, $userID, 'joined_Events', $eventID);
-    array_push($Users[$userID]['accepted_Events'], $eventID);
-    $FH->setUserData($Users);
 }
 function createComment($comment)
 {
@@ -98,6 +100,9 @@ function createComment($comment)
 if (isset($_POST['type'])) {
     //createComment("Found Post");
     switch ($_POST['type']) {
+        case '0':
+            getEventsList();
+            break;
         case '1':
             createComment("Type 1");
             //parse data
@@ -134,8 +139,8 @@ if (isset($_POST['type'])) {
         case '4':
             createComment("Type 4: Add User to Event");
             print_r($_POST);
-            if (isset($_POST['userID']) && isset($_POST['eventID'])) {
-                UserAcceptEvent(intval($_POST['eventID']), intval($_POST['userID']));
+            if (isset($_POST['userID']) && isset($_POST['eventID']) && isset($_POST['mode'])) {
+                UserAcceptEvent(intval($_POST['eventID']), intval($_POST['userID']), intval($_POST['mode']));
                 break;
             }
             echo "Not Set";

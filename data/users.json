@@ -3,11 +3,9 @@
         "username": "Dollison",
         "password": "password",
         "level": "4",
-        "posted_Events": [
-            1,
-            2,
-            3
-        ],
+        "posted_Events": {
+            "2": 3
+        },
         "joined_Events": [],
         "accepted_Events": []
     },
@@ -26,9 +24,7 @@
         "password": "Bot",
         "level": "1",
         "posted_Events": [],
-        "joined_Events": [
-            2
-        ],
+        "joined_Events": [],
         "accepted_Events": []
     }
 }

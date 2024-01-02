@@ -1,0 +1,17 @@
+#MainBody{
+    border: 2px solid black;
+    height: 100vh;
+    display: flex;
+}
+.Pillar{
+
+}
+#Left{
+    width: 30%;
+}
+#Mid{
+    width: 50%;
+}
+#Right{
+    width: 20%;
+}

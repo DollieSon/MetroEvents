@@ -1,9 +1,15 @@
 <?php
 include("General.php");
 $FH = MyFileHandler::getFileHandler();
-print_r($FH->getUserDataArray());
-echo "<br>";
-print_r($FH->getEventsDataArray());
+function getUserList()
+{
+    global $FH;
+    $Users = $FH->getUserDataArray();
+    foreach ($Users as $key => $Dets) {
+        unset($Users[$key]["password"]);
+    }
+    echo json_encode($Users);
+}
 
 function Login($username, $password)
 {
@@ -26,7 +32,7 @@ function CreateUser($username, $password)
     $ID = strval(intval(array_key_last($Users)) + 1);
     $Users[$ID] = $tempUser;
     $FH->setUserData($Users);
-    echo 'ID:' . $ID;
+    echo $ID;
 }
 
 function ChangeUserAuth($userID, $AuthLevel)
@@ -56,6 +62,9 @@ function ChangeUserDetails($userID, $username, $password)
 
 if (isset($_POST['type'])) {
     switch ($_POST['type']) {
+        case '0':
+            getUserList();
+            break;
         //login
         case '1':
             $pass = '';
@@ -66,8 +75,7 @@ if (isset($_POST['type'])) {
             if (isset($_POST['password'])) {
                 $pass = $_POST['password'];
             }
-            echo $pass . ';' . $user;
-
+            //echo $pass . ';' . $user;
             Login($user, $pass);
             break;
         //create User
@@ -80,7 +88,6 @@ if (isset($_POST['type'])) {
             if (isset($_POST['password'])) {
                 $pass = $_POST['password'];
             }
-            echo $pass . ';' . $user;
             CreateUser($user, $pass);
             break;
         case '3': //Change AuthLevel

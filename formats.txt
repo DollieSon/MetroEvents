@@ -6,7 +6,8 @@
         level:(), // Authentication level
         posted_Events:[(eventID)]
         joined_Events:[(eventID)],
-        "accepted_Events":[]
+        "accepted_Events":[],
+        "Declined":[]
     }
 }
 
@@ -20,7 +21,6 @@ Master,Mod,Organizer,Participant
         Description:(),
         Time:(),
         Organizer:(UserID),
-        Pending:[(UserID)],
         Joining:[(UserID)];
     }
 }

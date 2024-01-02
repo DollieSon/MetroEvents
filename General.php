@@ -73,7 +73,8 @@ $template_EventData = [
     'Time' => '12:00',
     'Organizer' => '0',
     'Pending' => [],
-    'Joining' => []
+    'Joining' => [],
+    "Declined" => []
 ];
 
 
@@ -82,8 +83,7 @@ $template_UserData = [
     'password' => '',
     'level' => '1',
     'posted_Events' => [],
-    'joined_Events' => [],
-    "accepted_Events" => []
+    'joined_Events' => []
 ];
 
 

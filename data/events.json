@@ -3,28 +3,31 @@
         "Name": "BirthdayParty",
         "Description": "Someone's Bday",
         "Time": "10:30",
-        "Organizer": 0,
+        "Organizer": "1",
         "Pending": [],
-        "Joining": []
+        "Joining": [],
+        "Declined": []
     },
     "2": {
         "Name": "null",
         "Description": "null",
         "Time": "null",
-        "Organizer": "0",
+        "Organizer": "1",
         "Pending": [
             3
         ],
         "Joining": [
             2
-        ]
+        ],
+        "Declined": []
     },
     "3": {
         "Name": "Namaste",
         "Description": "Party",
         "Time": "11:59",
-        "Organizer": "0",
+        "Organizer": "1",
         "Pending": [],
-        "Joining": []
+        "Joining": [],
+        "Declined": []
     }
 }
