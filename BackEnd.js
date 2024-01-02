@@ -74,3 +74,20 @@ function AcceptUserToEvent(){
         }
     });
 }
+
+function Login(){
+    $.ajax({
+        url:"http://localhost:430/MetroEvents/UserHandler.php",
+        type:"POST",
+        data:{
+            type:'1',
+            username:'Dollison',
+            password:'password'
+        },
+        success:(resp)=>{
+            console.log(resp);
+        }
+    });
+    
+}
+
