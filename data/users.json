@@ -3,19 +3,20 @@
         "username": "Dollison",
         "password": "password",
         "level": "4",
-        "posted_Events": {
-            "2": 3
-        },
-        "joined_Events": [],
-        "accepted_Events": []
+        "posted_Events": [
+            1,
+            2,
+            3,
+            4
+        ],
+        "joined_Events": []
     },
     "2": {
         "username": "NotMe",
         "password": "Password123",
         "level": "3",
         "posted_Events": [],
-        "joined_Events": [],
-        "accepted_Events": [
+        "joined_Events": [
             2
         ]
     },
@@ -24,7 +25,28 @@
         "password": "Bot",
         "level": "1",
         "posted_Events": [],
-        "joined_Events": [],
-        "accepted_Events": []
+        "joined_Events": [
+            2
+        ]
+    },
+    "4": {
+        "username": "Master",
+        "password": "God",
+        "level": "3",
+        "posted_Events": [],
+        "joined_Events": [
+            1,
+            2,
+            3
+        ]
+    },
+    "5": {
+        "username": "Griffith",
+        "password": "Peter",
+        "level": "2",
+        "posted_Events": [
+            5
+        ],
+        "joined_Events": []
     }
 }

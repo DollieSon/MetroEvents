@@ -4,28 +4,51 @@
         "Description": "Someone's Bday",
         "Time": "10:30",
         "Organizer": "1",
-        "Pending": [],
+        "Pending": [
+            4
+        ],
         "Joining": [],
         "Declined": []
     },
     "2": {
-        "Name": "null",
-        "Description": "null",
-        "Time": "null",
+        "Name": "Something",
+        "Description": "VeryFun Party",
+        "Time": "12:30",
         "Organizer": "1",
-        "Pending": [
+        "Pending": [],
+        "Joining": [
+            2,
             3
         ],
-        "Joining": [
-            2
-        ],
-        "Declined": []
+        "Declined": [
+            4
+        ]
     },
     "3": {
         "Name": "Namaste",
         "Description": "Party",
         "Time": "11:59",
         "Organizer": "1",
+        "Pending": [
+            4
+        ],
+        "Joining": [],
+        "Declined": []
+    },
+    "4": {
+        "Name": "SS12",
+        "Description": "sdlkasmalk",
+        "Time": "07:20",
+        "Organizer": "1",
+        "Pending": [],
+        "Joining": [],
+        "Declined": []
+    },
+    "5": {
+        "Name": "Son's BirthDay",
+        "Description": "It is my Son's BirthDay",
+        "Time": "02:07",
+        "Organizer": "5",
         "Pending": [],
         "Joining": [],
         "Declined": []

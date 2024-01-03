@@ -6,12 +6,17 @@ $FH = MyFileHandler::getFileHandler();
 
 function UnsetFromArray($array, $ID, $IDParam, $SerchFor)
 {
-    if (!empty($array[$ID][$IDParam])) {
+    /*
         $Key = array_search($SerchFor, $array[$ID][$IDParam]);
         echo "  Key" . $Key;
+        print_r($array[$ID][$IDParam]);
         if (isset($Key)) {
             unset($SerchFor, $array[$ID][$IDParam][$Key]);
         }
+    */
+    if (!empty($array[$ID][$IDParam])) {
+        $narr = array_values(array_diff($array[$ID][$IDParam], [$SerchFor]));
+        $array[$ID][$IDParam] = $narr;
     }
     return $array;
 }
@@ -82,11 +87,15 @@ function UserJoinEvent($eventID, $userID)
 function UserAcceptEvent($eventID, $userID, $Mode)
 {
     global $FH;
+    $userID = intval($userID);
     $Events = $FH->getEventsDataArray();
     $Events = UnsetFromArray($Events, $eventID, 'Pending', $userID);
+    $Events = UnsetFromArray($Events, $eventID, 'Joining', $userID);
+    $Events = UnsetFromArray($Events, $eventID, 'Declined', $userID);
+    print_r($Events);
     if ($Mode == 1) {
         array_push($Events[$eventID]['Joining'], $userID);
-    } else if ($Mode = 0) {
+    } else if ($Mode == 0) {
         array_push($Events[$eventID]['Declined'], $userID);
     }
     $FH->setEventsData($Events);

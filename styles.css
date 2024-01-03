@@ -15,3 +15,27 @@
 #Right{
     width: 20%;
 }
+
+.RadioBox{
+    display: flex;
+    justify-content: space-around;
+    border: 2px solid black;
+}
+#UserAuthInfo{
+    justify-content: space-around;
+    display: flex;
+}
+
+.Stat1{
+    background-color: rgba(0,255,0,100);
+}   
+.Stat2{
+    background-color: rgba(255,0,0,100);
+}
+.Stat0{
+    background-color: rgba(255,255,0,100);
+}
+
+.EventCont{
+    overflow-y: auto;
+}
